@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+    <div class="header-background">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>DMS<span class="logo-sub">Pro</span></h1>
+                        <p class="system-name">Dictionary Management System</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div class="tagline">
+                    <span class="tagline-text">
+                        <i class="fas fa-rocket"></i>
+                        Streamline Your Data Management
+                    </span>
+                </div>
+                <div class="feature-badges">
+                    <span class="badge">
+                        <i class="fas fa-plus-circle"></i>
+                        Create
+                    </span>
+                    <span class="badge">
+                        <i class="fas fa-search"></i>
+                        Read
+                    </span>
+                    <span class="badge">
+                        <i class="fas fa-edit"></i>
+                        Update
+                    </span>
+                    <span class="badge">
+                        <i class="fas fa-trash-alt"></i>
+                        Delete
+                    </span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="system-info">
+                    <div class="api-status-card">
+                        <div class="api-status-header">
+                            <i class="fas fa-plug"></i>
+                            <span>API Status</span>
+                        </div>
+                        <div class="api-status-body">
+                            <span class="status-indicator pulse" id="apiStatus">
+                                <span class="status-dot"></span>
+                                <span class="status-text">Connecting...</span>
+                            </span>
+                            <div class="status-details">
+                                <span class="server-info">
+                                    <i class="fas fa-server"></i>
+                                    Backend Server
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="version-info">
+                        <span>v2.1.0</span>
+                        <span class="divider">|</span>
+                        <span><i class="fas fa-user-shield"></i> Secure</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        
+        <div class="main-content">
+            <section class="dictionary-list-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list"></i> Dictionaries</h2>
+                    <div class="controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchDictionary" placeholder="Search name or remark...">
+                        </div>
+                        <button id="addDictionaryBtn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Dictionary
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="pagination-info" id="dictionaryPaginationInfo">
+                    Page <span id="dictionaryCurrentPage">1</span> of <span id="dictionaryTotalPages">1</span>,
+                    Total <span id="dictionaryTotalItems">0</span> records
+                </div>
+                
+                <div class="table-container">
+                    <table class="dictionary-table">
+                        <thead>
+                            <tr>
+                                <th width="30%">Dictionary Name</th>
+                                <th width="40%">Remark</th>
+                                <th width="30%">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dictionaryTableBody"></tbody>
+                    </table>
+                </div>
+                
+                <div class="pagination-controls" id="dictionaryPaginationControls">
+                    <button class="btn btn-secondary" id="dictionaryFirstPage" disabled>
+                        <i class="fas fa-angle-double-left"></i> First
+                    </button>
+                    <button class="btn btn-secondary" id="dictionaryPrevPage" disabled>
+                        <i class="fas fa-angle-left"></i> Prev
+                    </button>
+                    <div class="page-input">
+                        <span>Go to</span>
+                        <input type="number" id="dictionaryPageInput" min="1" value="1">
+                        <span>Page</span>
+                        <button class="btn btn-small" id="dictionaryGoToPage">Go</button>
+                    </div>
+                    <button class="btn btn-secondary" id="dictionaryNextPage" disabled>
+                        Next <i class="fas fa-angle-right"></i>
+                    </button>
+                    <button class="btn btn-secondary" id="dictionaryLastPage" disabled>
+                        Last <i class="fas fa-angle-double-right"></i>
+                    </button>
+                </div>
+                
+                <div class="empty-state" id="dictionaryEmptyState">
+                    <i class="fas fa-book-open"></i>
+                    <p>No dictionaries found. Click "Add Dictionary" to create one.</p>
+                </div>
+            </section>
+            
+            <section class="dictionary-content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-key"></i> Dictionary Content</h2>
+                    <div class="controls">
+                        <div class="selected-dictionary">
+                            <span id="selectedDictionaryName">No dictionary selected</span>
+                        </div>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchContent" placeholder="Search code or value..." disabled>
+                        </div>
+                        <button id="addContentBtn" class="btn btn-primary" disabled>
+                            <i class="fas fa-plus"></i> Add Content
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="pagination-info" id="contentPaginationInfo">
+                    Page <span id="contentCurrentPage">1</span> of <span id="contentTotalPages">1</span>,
+                    Total <span id="contentTotalItems">0</span> records
+                </div>
+                
+                <div class="table-container">
+                    <table class="content-table">
+                        <thead>
+                            <tr>
+                                <th width="30%">Code</th>
+                                <th width="40%">Value</th>
+                                <th width="30%">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contentTableBody"></tbody>
+                    </table>
+                </div>
+                
+                <div class="pagination-controls" id="contentPaginationControls">
+                    <button class="btn btn-secondary" id="contentFirstPage" disabled>
+                        <i class="fas fa-angle-double-left"></i> First
+                    </button>
+                    <button class="btn btn-secondary" id="contentPrevPage" disabled>
+                        <i class="fas fa-angle-left"></i> Prev
+                    </button>
+                    <div class="page-input">
+                        <span>Go to</span>
+                        <input type="number" id="contentPageInput" min="1" value="1">
+                        <span>Page</span>
+                        <button class="btn btn-small" id="contentGoToPage">Go</button>
+                    </div>
+                    <button class="btn btn-secondary" id="contentNextPage" disabled>
+                        Next <i class="fas fa-angle-right"></i>
+                    </button>
+                    <button class="btn btn-secondary" id="contentLastPage" disabled>
+                        Last <i class="fas fa-angle-double-right"></i>
+                    </button>
+                </div>
+                
+                <div class="empty-state" id="contentEmptyState">
+                    <i class="fas fa-clipboard-list"></i>
+                    <p>Select a dictionary from the left to view content</p>
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <p>Dictionary Management System &copy; 2026 | CRUD Operations</p>
+        </footer>
+    </div>
+    
+    <div id="dictionaryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="dictionaryModalTitle">Add Dictionary</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="dictionaryForm">
+                    <div class="form-group">
+                        <label for="dictName">Dictionary Name <span class="required">*</span></label>
+                        <input type="text" id="dictName" required placeholder="Enter dictionary name">
+                    </div>
+                    <div class="form-group">
+                        <label for="dictRemark">Remark</label>
+                        <textarea id="dictRemark" rows="3" placeholder="Enter remarks"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div id="contentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="contentModalTitle">Add Content</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="contentForm">
+                    <div class="form-group">
+                        <label for="contentCode">Code <span class="required">*</span></label>
+                        <input type="text" id="contentCode" required placeholder="Enter code">
+                    </div>
+                    <div class="form-group">
+                        <label for="contentValue">Value <span class="required">*</span></label>
+                        <input type="text" id="contentValue" required placeholder="Enter value">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div id="deleteModal" class="modal">
+        <div class="modal-content small-modal">
+            <div class="modal-header">
+                <h3>Confirm Delete</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="deleteMessage">Are you sure you want to delete this item? This action cannot be undone.</p>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
